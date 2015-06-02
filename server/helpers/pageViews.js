@@ -27,6 +27,12 @@ function init(n, isUpdate){
   });
 }
 
+function getPV(callback){
+  cache.get('pageViews', function(pvObj){
+    callback(pvObj.total);
+  });
+}
+
 function updatePV(){
   cache.get('pageViews', function(pvObj){
     var now = new Date();
@@ -56,5 +62,6 @@ function getMSPerMin(){
 
 module.exports = {
   init: init,
+  getPV: getPV,
   updatePV: updatePV
 };
