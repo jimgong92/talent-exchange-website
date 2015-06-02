@@ -14,6 +14,14 @@ function router(app, passport){
     return res.sendStatus(200);
   });
   /**
+   * PAGE VIEW RETRIEVAL API
+   */
+  app.get('/api/pageviews', function(req, res){
+    return pageViews.getPV(function(pageViews){
+      return res.send(pageViews);
+    });
+  });
+  /**
    * INDIVIDUAL API
    */
   app.get('/api/individual/*', function(req, res){

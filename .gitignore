@@ -5,3 +5,4 @@ TODO.md
 npm-debug.log
 /*/npm-debug.log
 server/config/secret.js
+dump.rdb

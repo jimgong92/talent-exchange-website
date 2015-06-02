@@ -18,23 +18,28 @@ function init(n, isUpdate){
     lastMin.count++;
     total++;
   }
-  cache.set('pageViews', {
+  var pvObj = {
     minutesTracked: n,
     firstMin: firstMin,
     lastMin: lastMin,
     total: total,
     startLast: startLast
-  });
+  };
+  cache.set('pageViews', JSON.stringify(pvObj));
 }
 
 function getPV(callback){
   cache.get('pageViews', function(pvObj){
+    console.log(pvObj);
+    pvObj = JSON.parse(pvObj);
     callback(pvObj.total);
   });
 }
 
 function updatePV(){
   cache.get('pageViews', function(pvObj){
+    pvObj = JSON.parse(pvObj);
+    pvObj.startLast = new Date(pvObj.startLast);
     var now = new Date();
     var elapsed = now - pvObj.startLast;
     var minPassed = Math.floor(elapsed / getMSPerMin());
@@ -52,7 +57,7 @@ function updatePV(){
     pvObj.lastMin.count++;
     pvObj.total++;
     pvObj.startLast += minPassed * getMSPerMin();
-    cache.set('pageViews', pvObj);
+    cache.set('pageViews', JSON.stringify(pvObj));
   });
 }
 
