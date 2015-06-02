@@ -5,8 +5,12 @@ var SkillController = require('../controllers/SkillController');
 var LocController = require('../controllers/LocController');
 var cache = require('../cache');
 
+var pageViews = require('../helpers/pageViews');
+pageViews.init();
+
 function router(app, passport){
   app.get('/', function(req, res){
+    pageViews.updatePV();
     return res.sendStatus(200);
   });
   /**
