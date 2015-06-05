@@ -1,6 +1,8 @@
 var cache = require('../cache');
 var Node = require('./dataStructures').Node;
 
+var PV_KEY = "pageViews";
+
 function init(n, isUpdate){
   /**
    * Default to track last 5 minutes
@@ -25,19 +27,21 @@ function init(n, isUpdate){
     total: total,
     startLast: startLast
   };
-  cache.set('pageViews', JSON.stringify(pvObj));
+  cache.set(PV_KEY, JSON.stringify(pvObj));
+  getPV(function(pvObj){
+    console.log(pvObj);
+  })
 }
 
 function getPV(callback){
-  cache.get('pageViews', function(pvObj){
-    console.log(pvObj);
+  cache.get(PV_KEY, function(pvObj){
     pvObj = JSON.parse(pvObj);
-    callback(pvObj.total);
+    callback({total: pvObj.total});
   });
 }
 
 function updatePV(){
-  cache.get('pageViews', function(pvObj){
+  cache.get(PV_KEY, function(pvObj){
     pvObj = JSON.parse(pvObj);
     pvObj.startLast = new Date(pvObj.startLast);
     var now = new Date();
@@ -57,7 +61,7 @@ function updatePV(){
     pvObj.lastMin.count++;
     pvObj.total++;
     pvObj.startLast += minPassed * getMSPerMin();
-    cache.set('pageViews', JSON.stringify(pvObj));
+    cache.set(PV_KEY, JSON.stringify(pvObj));
   });
 }
 

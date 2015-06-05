@@ -3,7 +3,7 @@ var client = redis.createClient();
 
 client.on('connect', function(){
   console.log('Connected to REDIS');
-  client.flushdb();
+  // console.log(client.flushdb());
 });
 client.on('error', function(err){
   console.log('Error:',err);

@@ -9,6 +9,7 @@ var pageViews = require('../helpers/pageViews');
 pageViews.init();
 
 function router(app, passport){
+  
   app.get('/', function(req, res){
     pageViews.updatePV();
     return res.sendStatus(200);
